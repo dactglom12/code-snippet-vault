@@ -1,14 +1,25 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  Get,
+  UseGuards,
+  HttpCode,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { LocalAuthDto } from './dto/auth.dto';
 import { Public } from 'src/decorators/public.decorator';
+import { GetUser } from 'src/decorators/get-user.decorator';
+import { JwtPayload } from './auth.types';
+import { JwtGuard } from 'src/guards/jwt.guard';
 
-@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('signup')
   async signup(
     @Body() dto: LocalAuthDto,
@@ -26,6 +37,7 @@ export class AuthController {
     return { status: 201, message: 'User created successfully' };
   }
 
+  @Public()
   @Post('signin')
   async signin(
     @Body() dto: LocalAuthDto,
@@ -41,5 +53,12 @@ export class AuthController {
     });
 
     return { status: 200, message: 'User signed in successfully' };
+  }
+
+  @UseGuards(JwtGuard)
+  @HttpCode(200)
+  @Get('me')
+  me(@GetUser() user: JwtPayload) {
+    return { email: user.email };
   }
 }
