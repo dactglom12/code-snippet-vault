@@ -15,10 +15,62 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
   password     String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
   refreshToken String?
+
+  snippets CodeSnippet[]
+  Folder   Folder[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Folder {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  snippets CodeSnippet[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model CodeSnippet {
+  id       Int    @id @default(autoincrement())
+  title    String
+  content  String
+  language String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  folder   Folder? @relation(fields: [folderId], references: [id])
+  folderId Int?
+
+  tags Tag[] @relation("SnippetTags")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  label String
+
+  snippets CodeSnippet[] @relation("SnippetTags")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([label])
 }
