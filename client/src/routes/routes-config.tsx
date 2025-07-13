@@ -12,7 +12,7 @@ export const routes: AppRoute[] = [
     children: [],
     element: (
       <ProtectedRoute>
-        <div>Hello</div>
+        <div>Hello, this is main page</div>
       </ProtectedRoute>
     ),
   },
