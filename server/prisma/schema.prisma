@@ -52,7 +52,7 @@ model CodeSnippet {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  Folder   Folder? @relation(fields: [folderId], references: [id])
+  folder   Folder? @relation(fields: [folderId], references: [id])
   folderId Int?
 
   tags Tag[] @relation("SnippetTags")
