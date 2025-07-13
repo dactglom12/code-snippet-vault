@@ -5,9 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { HashingModule } from './hashing/hashing.module';
 import { UserModule } from './user/user.module';
+import { SnippetModule } from './snippet/snippet.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, HashingModule, UserModule],
+  imports: [AuthModule, PrismaModule, HashingModule, UserModule, SnippetModule],
   controllers: [AppController],
   providers: [AppService],
 })
