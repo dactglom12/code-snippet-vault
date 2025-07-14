@@ -7,7 +7,7 @@ import { AuthApi } from "@/api/auth-api";
 import { Link } from "react-router";
 import { useAuth } from "@/contexts/auth/use-auth";
 
-export function LoginForm({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
@@ -32,7 +32,7 @@ export function LoginForm({
   ) => {
     try {
       event.preventDefault();
-      await AuthApi.signin({ email, password });
+      await AuthApi.signup({ email, password });
       await fetchMe();
     } catch (error) {
       console.error(error);
@@ -46,9 +46,9 @@ export function LoginForm({
       {...props}
     >
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Login to your account</h1>
+        <h1 className="text-2xl font-bold">Sign up to Code-Vault Inc.</h1>
         <p className="text-muted-foreground text-sm text-balance">
-          Enter your email below to login to your account
+          Enter your email and password below to sign up
         </p>
       </div>
       <div className="grid gap-6">
@@ -72,17 +72,17 @@ export function LoginForm({
             type="password"
             required
             onChange={handleChangePassword}
-            autoComplete="current-password"
+            autoComplete="new-password"
           />
         </div>
         <Button type="submit" className="w-full" disabled={!email || !password}>
-          Login
+          Signup
         </Button>
       </div>
       <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <Link to="/signup" className="underline underline-offset-4 ml-1">
-          Sign up
+        Already have an account?
+        <Link to="/login" className="underline underline-offset-4 ml-1">
+          Login
         </Link>
       </div>
     </form>
