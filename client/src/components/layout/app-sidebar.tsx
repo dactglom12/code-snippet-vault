@@ -1,16 +1,5 @@
 import * as React from "react";
-import {
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { BookOpen, Command, SquareTerminal, Folder } from "lucide-react";
 
 import { NavMain } from "@/components/layout/nav-main";
 import { NavUser } from "@/components/layout/nav-user";
@@ -23,6 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/contexts/auth/use-auth";
 
 const data = {
   user: {
@@ -32,13 +22,13 @@ const data = {
   },
   navMain: [
     {
-      title: "Playground",
+      title: "Snippets",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "All",
           url: "#",
         },
         {
@@ -52,103 +42,45 @@ const data = {
       ],
     },
     {
-      title: "Models",
+      title: "Folders",
       url: "#",
-      icon: Bot,
+      icon: Folder,
       items: [
         {
-          title: "Genesis",
+          title: "All",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Starred",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Shared",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Application",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
+          title: "About",
           url: "#",
         },
         {
           title: "Get Started",
           url: "#",
         },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
       ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useAuth();
+
   return (
     <Sidebar
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
@@ -163,8 +95,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">Code-Vault Inc</span>
+                  <span className="truncate text-xs">
+                    Safe storage for your snippets
+                  </span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -175,7 +109,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          user={{
+            email: user?.email ?? "",
+            avatar: "TBD",
+            name: "To Be Delivered",
+          }}
+        />
       </SidebarFooter>
     </Sidebar>
   );

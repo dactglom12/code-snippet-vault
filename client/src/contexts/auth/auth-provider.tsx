@@ -17,7 +17,7 @@ export function AuthProvider({ children }: React.PropsWithChildren<unknown>) {
     try {
       setIsLoading(true);
       setHasError(false);
-      const user = await AuthApi.me();
+      const { data: user } = await AuthApi.me();
       setUser(user);
     } catch (error) {
       console.error(error);
