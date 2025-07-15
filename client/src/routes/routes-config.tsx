@@ -3,6 +3,7 @@ import type { AppRoute } from "./route-type";
 import { ProtectedRoute } from "@/components/routes/protected-route";
 import SignupPage from "@/pages/signup/signup-page";
 import { SignedInRedirectRoute } from "@/components/routes/signed-in-redirect-route";
+import Page from "@/components/layout/app-layout";
 
 export const routes: AppRoute[] = [
   {
@@ -27,7 +28,7 @@ export const routes: AppRoute[] = [
     children: [],
     element: (
       <ProtectedRoute>
-        <div>Hello, this is main page</div>
+        <Page />
       </ProtectedRoute>
     ),
   },

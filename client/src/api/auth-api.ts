@@ -12,6 +12,6 @@ export class AuthApi {
   }
 
   static async me() {
-    return baseClient.get<unknown, UserEntity>("/auth/me");
+    return baseClient.get<unknown, { data: UserEntity }>("/auth/me");
   }
 }
