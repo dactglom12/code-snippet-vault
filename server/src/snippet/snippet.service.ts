@@ -25,7 +25,7 @@ export class SnippetService {
         tags: {
           connect: tags.map((tag) => ({ id: tag.id })),
         },
-        folder: { connect: { id: dto.folderId } },
+        folder: dto.folderId ? { connect: { id: dto.folderId } } : {},
       },
     });
   }

@@ -7,4 +7,8 @@ export class SnippetApi {
   static async createSnippet(dto: CreateSnippetDto) {
     return baseClient.post<AxiosResponse<SnippetEntity>>("/snippets/", dto);
   }
+
+  static async getAllSnippets() {
+    return baseClient.get<{ snippets: SnippetEntity[] }>("/snippets/");
+  }
 }
