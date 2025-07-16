@@ -1,8 +1,7 @@
-import { routes as configRoutes } from "./routes-config";
 import { Route } from "react-router";
 import type { AppRoute } from "./route-type";
 
-export function renderRoutes(routes: AppRoute[] = configRoutes) {
+export function renderRoutes(routes: AppRoute[]) {
   return routes.map((route) => {
     const key = buildKey(route);
 

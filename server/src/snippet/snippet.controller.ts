@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   ParseIntPipe,
   Patch,
@@ -28,5 +29,11 @@ export class SnippetController {
     @GetUser() user: JwtPayload,
   ) {
     return this.snippetService.update(snippetId, dto, user.userId);
+  }
+
+  @Get()
+  async getAllSnippetsByUserId(@GetUser() user: JwtPayload) {
+    const snippets = await this.snippetService.findAllByUserId(user.userId);
+    return { snippets };
   }
 }

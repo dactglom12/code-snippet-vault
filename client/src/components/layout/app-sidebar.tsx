@@ -23,21 +23,21 @@ const data = {
   navMain: [
     {
       title: "Snippets",
-      url: "#",
+      url: "/snippets",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
           title: "All",
-          url: "#",
+          url: "/snippets",
         },
         {
           title: "Starred",
-          url: "#",
+          url: "/snippets/starred",
         },
         {
           title: "Settings",
-          url: "#",
+          url: "/snippets/settings",
         },
       ],
     },

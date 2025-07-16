@@ -3,7 +3,10 @@ import type { AppRoute } from "./route-type";
 import { ProtectedRoute } from "@/components/routes/protected-route";
 import SignupPage from "@/pages/signup/signup-page";
 import { SignedInRedirectRoute } from "@/components/routes/signed-in-redirect-route";
-import Page from "@/components/layout/app-layout";
+import { CreateSnippetPage } from "@/pages/snippet/create-snippet-page";
+import LoggedInAppLayout from "@/components/layout/app-layout";
+import { AllSnippetsPage } from "@/pages/snippet/all-snippets-page";
+import { NotFoundPage } from "@/pages/404/not-found-page";
 
 export const routes: AppRoute[] = [
   {
@@ -25,10 +28,20 @@ export const routes: AppRoute[] = [
   // TODO: add app element and its children
   {
     path: "/",
-    children: [],
+    children: [
+      { element: <CreateSnippetPage />, path: "snippets/new" },
+      {
+        element: <AllSnippetsPage />,
+        path: "snippets",
+      },
+      {
+        element: <NotFoundPage />,
+        path: "*",
+      },
+    ],
     element: (
       <ProtectedRoute>
-        <Page />
+        <LoggedInAppLayout />
       </ProtectedRoute>
     ),
   },
