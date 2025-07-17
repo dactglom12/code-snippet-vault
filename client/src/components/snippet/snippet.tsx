@@ -1,14 +1,18 @@
 import type { Language } from "@/entities/language-entity";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { Button } from "../ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Folder, Pencil, Trash2 } from "lucide-react";
 import { useEffect } from "react";
 import { languageToIcon } from "@/constants/snippet-constants";
+import type { FolderEntity } from "@/entities/folder-entity";
+import { Badge } from "../ui/badge";
+import { cn } from "@/lib/utils";
 
 type CodeSnippetProps = {
   language: Language;
   content: string;
   title: string;
+  folder?: FolderEntity;
   hideControls?: boolean;
 };
 
@@ -36,6 +40,8 @@ export function CodeSnippet({
 
   const Icon = languageToIcon[props.language];
 
+  const isRightPanelDisplayed = !hideControls || props.folder;
+
   return (
     <div className="relative mt-12">
       <div className="box-border p-1 pl-4 absolute -top-8 w-full bg-gray-700 z-10 rounded-tl-sm rounded-tr-sm flex justify-between items-center">
@@ -45,8 +51,20 @@ export function CodeSnippet({
             {props.title}
           </pre>
         </div>
-        {!hideControls && (
-          <div>
+        {isRightPanelDisplayed && (
+          <div className="flex items-center">
+            {props.folder && (
+              <Badge
+                variant="outline"
+                className={cn(
+                  "flex items-center gap-1 text-sm",
+                  !hideControls && "mr-10"
+                )}
+              >
+                <Folder className="h-4 w-4" />
+                {props.folder.name}
+              </Badge>
+            )}
             <Button
               variant="ghost"
               size="icon"

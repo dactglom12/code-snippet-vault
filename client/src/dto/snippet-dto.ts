@@ -7,3 +7,7 @@ export type CreateSnippetDto = {
   tags?: string[];
   folderId?: number;
 };
+
+export type GetAllSnippetsQueryParams = {
+  folderless?: boolean;
+};
