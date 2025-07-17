@@ -69,7 +69,7 @@ export function AllSnippetsPage() {
         isOpen={snippetControls.isDeleteDialogOpen}
         onDelete={handleDeletion}
         onClose={snippetControls.closeDeleteDialog}
-        title="Delete Folder?"
+        title="Delete Snippet?"
         description="This action cannot be undone."
       />
     </>
