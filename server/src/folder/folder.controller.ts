@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { FolderService } from './folder.service';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { GetUser } from 'src/decorators/get-user.decorator';
@@ -9,8 +9,10 @@ export class FolderController {
   constructor(private folderService: FolderService) {}
 
   @Post()
-  async create(dto: CreateFolderDto, @GetUser() user: JwtPayload) {
-    return this.folderService.create(dto, user.userId);
+  async create(@Body() dto: CreateFolderDto, @GetUser() user: JwtPayload) {
+    const createdFolder = await this.folderService.create(dto, user.userId);
+
+    return { success: true, folder: createdFolder };
   }
 
   @Get()

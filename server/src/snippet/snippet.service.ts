@@ -30,10 +30,16 @@ export class SnippetService {
     });
   }
 
-  async findAllByUserId(userId: number) {
+  async findAllByUserId(userId: number, folderless?: boolean) {
+    const where: { userId: number; folderId?: number | null } = { userId };
+
+    if (folderless) {
+      where.folderId = null;
+    }
+
     return this.prisma.codeSnippet.findMany({
-      where: { userId },
-      include: { tags: true, folder: true },
+      where,
+      include: { tags: true, folder: !folderless },
     });
   }
 
@@ -92,5 +98,23 @@ export class SnippetService {
     }
 
     return this.prisma.codeSnippet.delete({ where: { id: snippetId } });
+  }
+
+  async assignSnippetsToFolder(
+    snippetIds: number[],
+    folderId: number,
+    userId: number,
+  ) {
+    return this.prisma.codeSnippet.updateMany({
+      where: {
+        id: {
+          in: snippetIds,
+        },
+        userId,
+      },
+      data: {
+        folderId,
+      },
+    });
   }
 }

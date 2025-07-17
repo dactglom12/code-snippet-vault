@@ -7,6 +7,7 @@ import { CreateSnippetPage } from "@/pages/snippet/create-snippet-page";
 import LoggedInAppLayout from "@/components/layout/app-layout";
 import { AllSnippetsPage } from "@/pages/snippet/all-snippets-page";
 import { NotFoundPage } from "@/pages/404/not-found-page";
+import { CreateFolderPage } from "@/pages/folder/create-folder-page";
 
 export const routes: AppRoute[] = [
   {
@@ -33,6 +34,10 @@ export const routes: AppRoute[] = [
       {
         element: <AllSnippetsPage />,
         path: "snippets",
+      },
+      {
+        element: <CreateFolderPage />,
+        path: "folders/new",
       },
       {
         element: <NotFoundPage />,
