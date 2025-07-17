@@ -3,9 +3,11 @@ import {
   Controller,
   Get,
   Param,
+  ParseBoolPipe,
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
 import { SnippetService } from './snippet.service';
@@ -32,8 +34,15 @@ export class SnippetController {
   }
 
   @Get()
-  async getAllSnippetsByUserId(@GetUser() user: JwtPayload) {
-    const snippets = await this.snippetService.findAllByUserId(user.userId);
+  async getAllSnippetsByUserId(
+    @GetUser() user: JwtPayload,
+    @Query('folderless', new ParseBoolPipe({ optional: true }))
+    folderless?: boolean,
+  ) {
+    const snippets = await this.snippetService.findAllByUserId(
+      user.userId,
+      folderless,
+    );
     return { snippets };
   }
 }

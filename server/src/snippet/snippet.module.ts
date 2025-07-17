@@ -8,5 +8,6 @@ import { TagModule } from 'src/tag/tag.module';
   providers: [SnippetService],
   imports: [PrismaModule, TagModule],
   controllers: [SnippetController],
+  exports: [SnippetService],
 })
 export class SnippetModule {}

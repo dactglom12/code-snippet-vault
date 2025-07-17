@@ -1,6 +1,7 @@
 import type { CreationMetadata } from "./shared";
 
-export type TagEntity = {
+export type FolderEntity = {
   id: number;
-  label: string;
+  name: string;
+  snippetCount?: number;
 } & CreationMetadata;

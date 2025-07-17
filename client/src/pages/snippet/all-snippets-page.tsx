@@ -45,6 +45,7 @@ export function AllSnippetsPage() {
               language={snippet.language}
               title={snippet.title}
               key={snippet.id}
+              folder={snippet.folder}
             />
           </div>
         ))}

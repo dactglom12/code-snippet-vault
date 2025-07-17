@@ -1,4 +1,6 @@
+import type { FolderEntity } from "./folder-entity";
 import type { Language } from "./language-entity";
+import type { CreationMetadata } from "./shared";
 import type { TagEntity } from "./tag-entity";
 
 export type SnippetEntity = {
@@ -7,6 +9,6 @@ export type SnippetEntity = {
   content: string;
   language: Language;
   userId: number;
-  folderId?: number;
+  folder?: FolderEntity;
   tags?: TagEntity[];
-};
+} & CreationMetadata;
