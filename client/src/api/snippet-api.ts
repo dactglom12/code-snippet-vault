@@ -28,4 +28,8 @@ export class SnippetApi {
 
     return baseClient.get<{ snippets: SnippetEntity[] }>(path);
   }
+
+  static async deleteSnippet(id: number) {
+    return baseClient.delete(`/snippets/${id}`);
+  }
 }

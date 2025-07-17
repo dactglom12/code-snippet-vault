@@ -9,6 +9,7 @@ import { AllSnippetsPage } from "@/pages/snippet/all-snippets-page";
 import { NotFoundPage } from "@/pages/404/not-found-page";
 import { CreateFolderPage } from "@/pages/folder/create-folder-page";
 import { AllFoldersPage } from "@/pages/folder/all-folders-page";
+import { Navigate } from "react-router";
 
 export const routes: AppRoute[] = [
   {
@@ -27,10 +28,11 @@ export const routes: AppRoute[] = [
       </SignedInRedirectRoute>
     ),
   },
-  // TODO: add app element and its children
   {
     path: "/",
     children: [
+      // TODO: add a normal home page
+      { element: <Navigate to="/snippets/new" replace />, path: "" },
       { element: <CreateSnippetPage />, path: "snippets/new" },
       {
         element: <AllSnippetsPage />,
