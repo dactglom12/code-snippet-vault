@@ -1,13 +1,12 @@
 import { SnippetApi } from "@/api/snippet-api";
 import { PageLayout } from "@/components/layout/page-layout";
 import { CodeSnippet } from "@/components/snippet/snippet";
-import { Skeleton } from "@/components/ui/skeleton";
 import useSWR from "swr";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
 import { useSnippetControls } from "@/hooks/use-snippet-controls";
 import { DeleteConfirmDialog } from "@/components/dialogs/delete-dialog";
+import { AddSnippetButton } from "@/components/snippet/add-snippet-button";
+import { SnippetListSkeleton } from "@/components/snippet/snippet-list-skeleton";
+import { EmptySnippetState } from "@/components/snippet/empty-snippet-state";
 
 export function AllSnippetsPage() {
   const { data, isLoading, mutate } = useSWR(
@@ -22,20 +21,17 @@ export function AllSnippetsPage() {
   };
 
   if (isLoading) {
-    return (
-      <div className="space-y-4">
-        {[...Array(2)].map((_, i) => (
-          <div key={i} className="space-y-2">
-            <Skeleton className="h-4 w-1/3" />
-            <Skeleton className="h-24 w-1/2" />
-          </div>
-        ))}
-      </div>
-    );
+    return <SnippetListSkeleton />;
   }
 
   if (!data) {
     return null;
+  }
+
+  const snippets = data.data.snippets;
+
+  if (snippets.length === 0) {
+    return <EmptySnippetState />;
   }
 
   return (
@@ -73,16 +69,5 @@ export function AllSnippetsPage() {
         description="This action cannot be undone."
       />
     </>
-  );
-}
-
-function AddSnippetButton() {
-  return (
-    <Button asChild variant="outline" size="sm" className="gap-2">
-      <Link to="/snippets/new">
-        <Plus className="w-4 h-4" />
-        Add Snippet
-      </Link>
-    </Button>
   );
 }

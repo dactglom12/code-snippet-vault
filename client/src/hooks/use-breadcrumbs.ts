@@ -14,6 +14,11 @@ export function useBreadcrumbs() {
   const { pathname } = useLocation();
 
   const segments = pathname.split("/");
+
+  if (segments.every((segment) => segment === "")) {
+    return [];
+  }
+
   const breadcrumbs: Breadcrumb[] = [HOME_BREADCRUMB];
 
   // skip home breadcrumb which is included by default

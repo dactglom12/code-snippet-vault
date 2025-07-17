@@ -23,6 +23,8 @@ export function useSnippetControls() {
       if (response.status !== 204) {
         throw new Error("Snippet not deleted successfully");
       }
+
+      setSnippetIdToDelete(undefined);
     } catch (error) {
       console.error(error);
     }
