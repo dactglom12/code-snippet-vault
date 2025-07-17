@@ -9,11 +9,13 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 
 type CodeSnippetProps = {
+  id?: number;
   language: Language;
   content: string;
   title: string;
   folder?: FolderEntity;
   hideControls?: boolean;
+  onDelete?: (id: number) => void;
 };
 
 export function CodeSnippet({
@@ -37,6 +39,14 @@ export function CodeSnippet({
       });
     }
   }, [hideControls]);
+
+  const handleDelete = () => {
+    if (!props.onDelete || !props.id) {
+      return null;
+    }
+
+    return props.onDelete(props.id);
+  };
 
   const Icon = languageToIcon[props.language];
 
@@ -74,14 +84,17 @@ export function CodeSnippet({
               <Pencil className="h-4 w-4 text-muted-foreground" />
             </Button>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-destructive/10"
-              aria-label="Delete"
-            >
-              <Trash2 className="h-4 w-4 text-destructive" />
-            </Button>
+            {props.onDelete && props.id && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-destructive/10"
+                aria-label="Delete"
+                onClick={handleDelete}
+              >
+                <Trash2 className="h-4 w-4 text-destructive" />
+              </Button>
+            )}
           </div>
         )}
       </div>

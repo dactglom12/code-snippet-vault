@@ -6,9 +6,20 @@ import useSWR from "swr";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { useSnippetControls } from "@/hooks/use-snippet-controls";
+import { DeleteConfirmDialog } from "@/components/dialogs/delete-dialog";
 
 export function AllSnippetsPage() {
-  const { data, isLoading } = useSWR("/snippets", SnippetApi.getAllSnippets);
+  const { data, isLoading, mutate } = useSWR(
+    "/snippets",
+    SnippetApi.getAllSnippets
+  );
+  const snippetControls = useSnippetControls();
+
+  const handleDeletion = async () => {
+    await snippetControls.deleteSnippet();
+    mutate();
+  };
 
   if (isLoading) {
     return (
@@ -28,29 +39,40 @@ export function AllSnippetsPage() {
   }
 
   return (
-    <PageLayout
-      title="All Snippets"
-      description="Browse and manage all your saved code snippets in one place."
-      actions={[
-        {
-          element: <AddSnippetButton />,
-        },
-      ]}
-    >
-      <div className="w-full md:w-3/4">
-        {data.data.snippets.map((snippet) => (
-          <div key={snippet.id}>
-            <CodeSnippet
-              content={snippet.content}
-              language={snippet.language}
-              title={snippet.title}
-              key={snippet.id}
-              folder={snippet.folder}
-            />
-          </div>
-        ))}
-      </div>
-    </PageLayout>
+    <>
+      <PageLayout
+        title="All Snippets"
+        description="Browse and manage all your saved code snippets in one place."
+        actions={[
+          {
+            element: <AddSnippetButton />,
+          },
+        ]}
+      >
+        <div className="w-full md:w-3/4">
+          {data.data.snippets.map((snippet) => (
+            <div key={snippet.id}>
+              <CodeSnippet
+                id={snippet.id}
+                content={snippet.content}
+                language={snippet.language}
+                title={snippet.title}
+                key={snippet.id}
+                folder={snippet.folder}
+                onDelete={snippetControls.openDeleteDialog}
+              />
+            </div>
+          ))}
+        </div>
+      </PageLayout>
+      <DeleteConfirmDialog
+        isOpen={snippetControls.isDeleteDialogOpen}
+        onDelete={handleDeletion}
+        onClose={snippetControls.closeDeleteDialog}
+        title="Delete Folder?"
+        description="This action cannot be undone."
+      />
+    </>
   );
 }
 

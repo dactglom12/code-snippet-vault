@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Param,
   ParseBoolPipe,
   ParseIntPipe,
@@ -44,5 +46,14 @@ export class SnippetController {
       folderless,
     );
     return { snippets };
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async deleteSnippet(
+    @Param('id', ParseIntPipe) snippetId: number,
+    @GetUser() user: JwtPayload,
+  ) {
+    return this.snippetService.delete(snippetId, user.userId);
   }
 }
