@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { SnippetService } from 'src/snippet/snippet.service';
@@ -40,5 +40,15 @@ export class FolderService {
         },
       },
     });
+  }
+
+  async deleteById(id: number, userId: number) {
+    const folder = await this.prisma.folder.findUnique({ where: { id } });
+
+    if (!folder || folder.userId !== userId) {
+      throw new ForbiddenException('User does not own this folder');
+    }
+
+    return this.prisma.folder.delete({ where: { id } });
   }
 }

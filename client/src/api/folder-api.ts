@@ -10,4 +10,8 @@ export class FolderApi {
   static async getFolders() {
     return baseClient.get<{ folders: FolderEntity[] }>("/folders");
   }
+
+  static async deleteFolder(id: number) {
+    return baseClient.delete(`/folders/${id}`);
+  }
 }

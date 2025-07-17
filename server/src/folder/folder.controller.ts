@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { FolderService } from './folder.service';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { GetUser } from 'src/decorators/get-user.decorator';
@@ -26,5 +35,14 @@ export class FolderController {
         snippetCount: folder._count.snippets,
       })),
     };
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async deleteByUserId(
+    @Param('id', ParseIntPipe) folderId: number,
+    @GetUser() user: JwtPayload,
+  ) {
+    return this.folderService.deleteById(folderId, user.userId);
   }
 }
