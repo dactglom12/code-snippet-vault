@@ -32,7 +32,13 @@ export class FolderService {
   async findAllByUserId(userId: number) {
     return this.prisma.folder.findMany({
       where: { userId },
-      include: { snippets: true },
+      include: {
+        _count: {
+          select: {
+            snippets: true,
+          },
+        },
+      },
     });
   }
 }

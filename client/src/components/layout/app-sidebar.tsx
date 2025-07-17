@@ -48,7 +48,7 @@ const data = {
       items: [
         {
           title: "All",
-          url: "#",
+          url: "/folders",
         },
         {
           title: "Starred",

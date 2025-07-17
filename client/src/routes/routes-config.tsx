@@ -8,6 +8,7 @@ import LoggedInAppLayout from "@/components/layout/app-layout";
 import { AllSnippetsPage } from "@/pages/snippet/all-snippets-page";
 import { NotFoundPage } from "@/pages/404/not-found-page";
 import { CreateFolderPage } from "@/pages/folder/create-folder-page";
+import { AllFoldersPage } from "@/pages/folder/all-folders-page";
 
 export const routes: AppRoute[] = [
   {
@@ -38,6 +39,10 @@ export const routes: AppRoute[] = [
       {
         element: <CreateFolderPage />,
         path: "folders/new",
+      },
+      {
+        element: <AllFoldersPage />,
+        path: "folders",
       },
       {
         element: <NotFoundPage />,
